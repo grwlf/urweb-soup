@@ -15,6 +15,7 @@ lib = uwlib (file "lib.urp") $ do
   library Prelude.lib
   allow url "http://github.com*"
   allow url "http://impredicative.com*"
+  allow url "https://camo.githubusercontent.com*"
   ur (file "Soup.ur")
 
 main = writeDefaultMakefiles $ do
