@@ -16,6 +16,7 @@ lib = uwlib (file "lib.urp") $ do
   allow url "http://github.com*"
   allow url "http://impredicative.com*"
   allow url "https://camo.githubusercontent.com*"
+  embed (file "Soup.css")
   ur (file "Soup.ur")
 
 main = writeDefaultMakefiles $ do
