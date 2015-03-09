@@ -1,0 +1,3 @@
+
+val insert : string -> xhead
+
