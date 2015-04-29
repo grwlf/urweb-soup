@@ -62,3 +62,11 @@ fun narrow [t:::{Type}] [t~out]
   : transaction page = 
   f act (Uru.addStylesheet (Soup_css.url) (Uru.addTag [#SOUP] {} r))
 
+(* Converts a float @f to a string, with @n digits after the dot *)
+fun fmtfloat n f  = 
+  let
+    val m = float (10`pow`n)
+  in
+    show ((float (round(f * m))) / m)
+  end
+
