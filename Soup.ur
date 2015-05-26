@@ -30,9 +30,16 @@ fun badge (txt:string) (num:int) : xbody =
     <button class={cl (B.btn :: B.btn_primary :: [])}>{[txt]}  <span class={B.badge}>{[num]}</span></button>
   </xml>
 
-fun narrow_container (x:xbody) : xbody =
+type layout_settings = {Width:int}
+val defSettings : layout_settings = {Width = 730}
+
+fun narrow_container (ss:layout_settings) (x:xbody) : xbody =
   <xml>
-    <div class={B.container} style="margin-top:50px; margin-bottom:100px; max-width:730px; padding-bottom:50px">
+    <div class={B.container} style={
+      oneProperty (STYLE "margin-top:50px; margin-bottom:100px; padding-bottom:50px")
+        (value (property "max-width") (atom ((show ss.Width) ^ "px")))
+      }
+      >
       {x}
     </div>
   </xml>
@@ -50,17 +57,23 @@ con dpage = Uru.dpage
 con need = [BOOTSTRAP=unit]
 con out = need ++ [SOUP=unit]
 
-val act = {
-  Container = narrow_container,
+fun layout_map (ss:layout_settings) = {
+  Container = narrow_container ss,
   Footer = narrow_footer
   }
 
 fun narrow [t:::{Type}] [t~out]
-  (* (f: typeof(act) -> record (dpage (t ++ out)) -> transaction page) *)
-  f
+  f (* : typeof(act) -> record (dpage (t ++ out)) -> transaction page *)
   (r:record (dpage (t ++ need)))
   : transaction page = 
-  f act (Uru.addStylesheet (Soup_css.url) (Uru.addTag [#SOUP] {} r))
+  f (layout_map {Width=730}) (Uru.addStylesheet (Soup_css.url) (Uru.addTag [#SOUP] {} r))
+
+fun layout [t:::{Type}] [t~out]
+  (ss:layout_settings)
+  f (* : typeof(act) -> record (dpage (t ++ out)) -> transaction page *)
+  (r:record (dpage (t ++ need)))
+  : transaction page = 
+  f (layout_map ss) (Uru.addStylesheet (Soup_css.url) (Uru.addTag [#SOUP] {} r))
 
 (* Converts a float @f to a string, with @n digits after the dot *)
 fun fmtfloat n f  = 
