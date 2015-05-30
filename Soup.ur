@@ -83,3 +83,46 @@ fun fmtfloat n f  =
     show ((float (round(f * m))) / m)
   end
 
+
+
+val btn_prim = cl (B.btn :: B.btn_primary :: [])
+val btn_def = cl (B.btn :: B.btn_default :: [])
+val data_modal_dismiss = data_attr data_kind "dismiss" "modal"
+val aria_hidden = data_attr aria_kind "hidden" "true"
+
+type modalSettings = { Title : xbody, Body : xbody, Footer : xbody, Placeholder : xbody}
+
+fun modal (s:modalSettings) : transaction xbody =
+  let
+    val data = data_attr data_kind
+    val aria = data_attr aria_kind
+    val cl = CSS.list
+  in
+    i <- fresh;
+    return
+    <xml>
+
+      <div class={cl (B.modal :: B.fade :: [])} id={i} role="dialog" data={data_attrs (aria "labelledby" (show i)) aria_hidden}>
+        <div class={B.modal_dialog}>
+          <div class={B.modal_content}>
+            <div class={B.modal_header}>
+              <a role="button" class={B.close} data={data_attrs data_modal_dismiss aria_hidden}>×</a>
+              <div class={B.modal_title}>{s.Title}</div>
+            </div>
+            <div class={B.modal_body}>
+              {s.Body}
+            </div>
+            <div class={B.modal_footer}>
+              {s.Footer}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data={data_attrs (data "toggle" "modal") (data "target" ("#" ^ (show i)))}>
+        {s.Placeholder}
+      </div>
+    </xml>
+  end
+  
+  

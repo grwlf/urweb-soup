@@ -19,6 +19,7 @@ lib = uwlib (file "lib.urp") $ do
   embed (file "Soup.css")
   src (file "Analytics.cpp","-std=c++11","-lstdc++")
   ffi (file "Analytics.urs")
+  ffi (file "HTML5Tags.urs")
   include (file "Analytics.h")
   ur (file "Soup.ur")
 
