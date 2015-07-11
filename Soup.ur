@@ -124,5 +124,4 @@ fun modal (s:modalSettings) : transaction xbody =
       </div>
     </xml>
   end
-  
-  
+

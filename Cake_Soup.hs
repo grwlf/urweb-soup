@@ -17,10 +17,17 @@ lib = uwlib (file "lib.urp") $ do
   allow url "http://impredicative.com*"
   allow url "https://camo.githubusercontent.com*"
   embed (file "Soup.css")
+
   src (file "Analytics.cpp","-std=c++11","-lstdc++")
   ffi (file "Analytics.urs")
-  ffi (file "HTML5Tags.urs")
   include (file "Analytics.h")
+
+  src (file "Unsafe.cpp","-std=c++11","-lstdc++")
+  ffi (file "Unsafe.urs")
+  include (file "Unsafe.h")
+
+  ffi (file "HTML5Tags.urs")
+  ur (file "Snippets.ur")
   ur (file "Soup.ur")
 
 main = writeDefaultMakefiles $ do
