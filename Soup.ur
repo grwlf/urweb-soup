@@ -33,6 +33,19 @@ fun badge (txt:string) (num:int) : xbody =
 type layout_settings = {Width:int}
 val defSettings : layout_settings = {Width = 730}
 
+fun narrow_header (ss:layout_settings) (c:css_class) (x:xbody) : xbody =
+  <xml>
+    <header class={c}>
+      <div class={B.container} style={
+        oneProperty noStyle
+          (value (property "max-width") (atom ((show ss.Width) ^ "px")))
+        }
+        >
+        {x}
+      </div>
+    </header>
+  </xml>
+
 fun narrow_container (ss:layout_settings) (x:xbody) : xbody =
   <xml>
     <div class={B.container} style={
@@ -58,6 +71,7 @@ con need = [BOOTSTRAP=unit]
 con out = need ++ [SOUP=unit]
 
 fun layout_map (ss:layout_settings) = {
+  Header = narrow_header ss,
   Container = narrow_container ss,
   Footer = narrow_footer
   }
