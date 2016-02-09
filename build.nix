@@ -1,15 +1,22 @@
-{libs ? []}
+{libraries ? {}}
 
 let
 
-uwb = (import <urweb-build>) libs;
+uwb = (import <urweb-build>) libraries;
 
 in with uwb;
 
 rec {
 
   lib = mkLib {
+
     name = "Soup";
+
+    libraries = {
+      prelude = thirdparty ./lib/urweb-prelude;
+      bootstrap = thirdparty ./lib/uru3/Bootstrap;
+      uru3 = thirdparty ./lib/uru3/Uru;
+    };
 
     statements = [
       (set "allow url 'http://github.com*'")
@@ -20,14 +27,6 @@ rec {
       (ffi ./Analytics.urs)
       (include ./Analytics.h)
       (src1 ./Soup.ur)
-
-      (lib bootstrap ./lib/uru3/Bootstrap)
-      (lib prelude ./lib/uru3/Uru)
-      (lib uru ./lib/uru3/Uru)
-
-      # library Bootstrap.lib
-      # library Uru.lib
-      # library Prelude.lib
     ];
   };
 
