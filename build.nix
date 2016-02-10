@@ -1,21 +1,21 @@
-{libraries ? {}}
+{libraries ? {}} :
 
 let
 
-uwb = (import <urweb-build>) libraries;
+uwb = (import <urweb-build>) { inherit libraries; };
 
 in with uwb;
 
 rec {
 
-  lib = mkLib {
+  soup = mkLib {
 
     name = "Soup";
 
     libraries = {
       prelude = thirdparty ./lib/urweb-prelude;
       bootstrap = thirdparty ./lib/uru3/Bootstrap;
-      uru3 = thirdparty ./lib/uru3/Uru;
+      uru = thirdparty ./lib/uru3/Uru;
     };
 
     statements = [
