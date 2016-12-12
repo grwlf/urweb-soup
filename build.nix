@@ -23,9 +23,20 @@ rec {
       (set "allow url http://impredicative.com*")
       (set "allow url https://camo.githubusercontent.com*")
       (embed-css ./Soup.css)
+
       (include ./Analytics.h)
       (obj-cpp-11 ./Analytics.cpp)
       (ffi ./Analytics.urs)
+
+      (include ./MD5_FFI.h)
+      (ffi ./MD5_FFI.urs)
+      (obj {
+        compiler = "gcc";
+        source=./MD5_FFI.c;
+        suffixes = [".c"];
+        cflags=["-I${./.}"];
+       })
+
       (src1 ./Soup.ur)
     ];
   };
